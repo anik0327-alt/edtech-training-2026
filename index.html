@@ -36,7 +36,7 @@
   </main>
   <footer><div class="shell footer-inner"><div><strong>2026 에듀테크 일타강사 연수</strong><p>배우고, 연결하고, 수업을 혁신하는 여름.</p></div><p>© 2026 EdTech Training.</p></div></footer>
   <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"><div class="dialog" id="dialog"></div></div>
-  <audio id="bgm" autoplay loop preload="auto"><source src="bgm.mp3" type="audio/mpeg"></audio>
+  <audio id="bgm" loop preload="auto"><source src="bgm.mp3" type="audio/mpeg"></audio>
   <script>
     const instructors=[
       {id:"ot",name:"개강식 OT",topic:"우리 안의 DNA, 그리고 함께",image:"images/ot.png",replay:"https://www.youtube.com/watch?v=yf3ivZMd3U4",docs:"https://drive.google.com/drive/folders/1RAPJD2RuVnSYzdFzB4yR-VwMb6CCk4qy?usp=sharing"},
@@ -57,10 +57,8 @@
     const audio=document.querySelector("#bgm"),audioButton=document.querySelector("#audioButton"),audioLabel=document.querySelector("#audioLabel"),audioIcon=document.querySelector("#audioIcon");audio.volume=.28;
     function setAudioUI(playing){audioLabel.textContent=playing?"BGM 끄기":"BGM 켜기";audioIcon.textContent=playing?"♫":"♪";audioButton.setAttribute("aria-pressed",String(playing))}
     async function startAudio(){try{await audio.play();setAudioUI(true);return true}catch(e){setAudioUI(false);return false}}
-    startAudio();
     const entryGate=document.querySelector("#entryGate"),entryButton=document.querySelector("#entryButton");
     entryButton.addEventListener("click",async()=>{await startAudio();entryGate.classList.add("hidden");document.body.classList.remove("gated");setTimeout(()=>entryGate.remove(),500)});
-    ["pointerdown","keydown","touchstart"].forEach(eventName=>document.addEventListener(eventName,()=>{if(audio.paused)startAudio()},{once:true,passive:true}));
     audioButton.addEventListener("click",async event=>{event.stopPropagation();if(audio.paused){await startAudio()}else{audio.pause();setAudioUI(false)}});
   </script>
 </body>
