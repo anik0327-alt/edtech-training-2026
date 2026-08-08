@@ -34,25 +34,30 @@
   </main>
   <footer><div class="shell footer-inner"><div><strong>2026 에듀테크 일타강사 연수</strong><p>배우고, 연결하고, 수업을 혁신하는 여름.</p></div><p>© 2026 EdTech Training.</p></div></footer>
   <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"><div class="dialog" id="dialog"></div></div>
-  <audio id="bgm" loop preload="none"><source src="bgm.mp3" type="audio/mpeg"></audio>
+  <audio id="bgm" autoplay loop preload="auto"><source src="bgm.mp3" type="audio/mpeg"></audio>
   <script>
     const instructors=[
       {id:"ot",name:"개강식 OT",topic:"우리 안의 DNA, 그리고 함께",image:"images/ot.png",replay:"https://www.youtube.com/watch?v=yf3ivZMd3U4",docs:"https://drive.google.com/drive/folders/1RAPJD2RuVnSYzdFzB4yR-VwMb6CCk4qy?usp=sharing"},
-      {id:"ahn",name:"안익재",topic:"패들렛",image:"images/ahn.png",chat:"https://open.kakao.com/o/gSS4elIh",code:"0027"},
-      {id:"so",name:"소성현",topic:"바이브코딩",image:"images/so.png",chat:"https://open.kakao.com/o/gTAg4WFi"},
-      {id:"lee_dg",name:"이동규",topic:"캔바",image:"images/lee-dg.png",chat:"https://open.kakao.com/o/gqUX8cci"},
-      {id:"lee_sg",name:"이상경",topic:"GPT 3대장",image:"images/lee-sg.png",chat:"https://open.kakao.com/o/g1EReAHh",code:"221130"},
-      {id:"hwang",name:"황의태",topic:"노션",image:"images/hwang.png",chat:"https://open.kakao.com/o/gjyBhnMh"},
-      {id:"kim",name:"김명수",topic:"구글 워크스페이스",image:"images/kim.png",chat:"https://open.kakao.com/o/gSS4elIh",code:"0027"},
-      {id:"lee_yh",name:"이영화",topic:"노트북LM",image:"images/lee-yh.png",chat:"https://open.kakao.com/o/g3afxkMh",code:"1108"}
+      {id:"ahn",name:"안익재",topic:"패들렛",image:"images/ahn.png",chat:"https://open.kakao.com/o/gSS4elIh",code:"0027",docs:"https://drive.google.com/drive/folders/1RAPJD2RuVnSYzdFzB4yR-VwMb6CCk4qy?usp=sharing"},
+      {id:"so",name:"소성현",topic:"바이브코딩",image:"images/so.png",chat:"https://open.kakao.com/o/gTAg4WFi",replay:"https://youtu.be/r2R1b7GsRDo",docs:"https://drive.google.com/drive/folders/1RAPJD2RuVnSYzdFzB4yR-VwMb6CCk4qy?usp=sharing"},
+      {id:"lee_dg",name:"이동규",topic:"캔바",image:"images/lee-dg.png",chat:"https://open.kakao.com/o/gqUX8cci",replay:"https://www.youtube.com/watch?v=8HcFE9Gv_sI",docs:"https://drive.google.com/drive/folders/1RAPJD2RuVnSYzdFzB4yR-VwMb6CCk4qy?usp=sharing"},
+      {id:"lee_sg",name:"이상경",topic:"GPT 3대장",image:"images/lee-sg.png",chat:"https://open.kakao.com/o/g1EReAHh",code:"221130",replay:"https://youtu.be/7odp_qcisYQ",docs:"https://drive.google.com/drive/folders/1RAPJD2RuVnSYzdFzB4yR-VwMb6CCk4qy?usp=sharing"},
+      {id:"hwang",name:"황의태",topic:"노션",image:"images/hwang.png",chat:"https://open.kakao.com/o/gjyBhnMh",replay:"https://youtu.be/TZKjg8Xgf5w",docs:"https://drive.google.com/drive/folders/1RAPJD2RuVnSYzdFzB4yR-VwMb6CCk4qy?usp=sharing"},
+      {id:"kim",name:"김명수",topic:"구글 워크스페이스",image:"images/kim.png",chat:"https://open.kakao.com/o/gSS4elIh",code:"0027",replay:"https://www.youtube.com/watch?v=HrJFS8QttQg",docs:"https://drive.google.com/drive/folders/1RAPJD2RuVnSYzdFzB4yR-VwMb6CCk4qy?usp=sharing"},
+      {id:"lee_yh",name:"이영화",topic:"노트북LM",image:"images/lee-yh.png",chat:"https://open.kakao.com/o/g3afxkMh",code:"1108",replay:"https://www.youtube.com/watch?v=ohbj4YwsiVA&feature=youtu.be",docs:"https://drive.google.com/drive/folders/1RAPJD2RuVnSYzdFzB4yR-VwMb6CCk4qy?usp=sharing"}
     ];
     const grid=document.querySelector("#grid"),modal=document.querySelector("#modal"),dialog=document.querySelector("#dialog");
     const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
     instructors.forEach((ins,i)=>{const card=document.createElement("button");card.className="card";card.type="button";card.innerHTML=`<div class="portrait"><img src="${esc(ins.image)}" alt="${esc(ins.name)}" loading="lazy"></div><div class="card-body"><span class="number">${String(i+1).padStart(2,"0")} · INSTRUCTOR</span><h3>${esc(ins.name)}${ins.id==="ot"?"":" 강사"}</h3><div class="topic">${esc(ins.topic)}</div></div><span class="arrow" aria-hidden="true">↗</span>`;card.addEventListener("click",()=>openDetail(ins,i));grid.append(card)});
-    function resource(href,label,code){return href?`<a class="resource" href="${esc(href)}" target="_blank" rel="noopener"><span>${label}</span>${code?`<span class="badge">참여 코드 ${esc(code)}</span>`:"<span>↗</span>"}</a>`:`<div class="resource disabled"><span>${label}</span><span class="badge">준비 중</span></div>`}
+    function resource(href,label,code){return href?`<a class="resource" href="${esc(href)}" target="_blank" rel="noopener"><span>${label}</span>${code?`<span class="badge">참여 코드 ${esc(code)}</span>`:"<span>↗</span>"}</a>`:""}
     function openDetail(ins,i){dialog.innerHTML=`<div class="dialog-grid"><div class="dialog-photo"><img src="${esc(ins.image)}" alt="${esc(ins.name)}"></div><div class="dialog-content"><button class="close" type="button" aria-label="닫기">×</button><span class="dialog-kicker">INSTRUCTOR ${String(i+1).padStart(2,"0")}</span><h3 id="dialogTitle">${esc(ins.name)}${ins.id==="ot"?"":" 강사"}</h3><p class="dialog-topic">${esc(ins.topic)}</p><div class="link-list">${ins.id==="ot"?"":resource(ins.chat,"카카오톡 오픈채팅방",ins.code)}${resource(ins.replay,ins.id==="ot"?"개강식 영상 보기":"연수 다시보기")}${resource(ins.docs,"연수 자료 모음")}</div></div></div>`;modal.classList.add("open");document.body.style.overflow="hidden";dialog.querySelector(".close").focus()}
     function closeModal(){modal.classList.remove("open");document.body.style.overflow=""}modal.addEventListener("click",e=>{if(e.target===modal||e.target.closest(".close"))closeModal()});document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
-    const audio=document.querySelector("#bgm"),audioButton=document.querySelector("#audioButton"),audioLabel=document.querySelector("#audioLabel"),audioIcon=document.querySelector("#audioIcon");audio.volume=.28;audioButton.addEventListener("click",async()=>{if(audio.paused){try{await audio.play();audioLabel.textContent="BGM 끄기";audioIcon.textContent="♫";audioButton.setAttribute("aria-pressed","true")}catch(e){audioLabel.textContent="재생 실패"}}else{audio.pause();audioLabel.textContent="BGM 켜기";audioIcon.textContent="♪";audioButton.setAttribute("aria-pressed","false")}});
+    const audio=document.querySelector("#bgm"),audioButton=document.querySelector("#audioButton"),audioLabel=document.querySelector("#audioLabel"),audioIcon=document.querySelector("#audioIcon");audio.volume=.28;
+    function setAudioUI(playing){audioLabel.textContent=playing?"BGM 끄기":"BGM 켜기";audioIcon.textContent=playing?"♫":"♪";audioButton.setAttribute("aria-pressed",String(playing))}
+    async function startAudio(){try{await audio.play();setAudioUI(true);return true}catch(e){setAudioUI(false);return false}}
+    startAudio();
+    ["pointerdown","keydown","touchstart"].forEach(eventName=>document.addEventListener(eventName,()=>{if(audio.paused)startAudio()},{once:true,passive:true}));
+    audioButton.addEventListener("click",async event=>{event.stopPropagation();if(audio.paused){await startAudio()}else{audio.pause();setAudioUI(false)}});
   </script>
 </body>
 </html>
